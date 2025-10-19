@@ -1,6 +1,9 @@
 import { Card } from "@/components/ui/card";
-import { Trophy, TrendingUp } from "lucide-react";
+import { Trophy, TrendingUp, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 interface Player {
   id: number;
@@ -12,6 +15,7 @@ interface LeaderboardProps {
   players: Player[];
   onPositionChange?: () => void;
   roundNumber: number;
+  onEditScore?: (playerId: number, newScore: number) => void;
 }
 
 // Emojis for different position changes
@@ -19,10 +23,12 @@ const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "�
 const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
 const MAINTAIN_EMOJI = "😉";
 
-export const Leaderboard = ({ players, onPositionChange, roundNumber }: LeaderboardProps) => {
+export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore }: LeaderboardProps) => {
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
   const [playerEmojis, setPlayerEmojis] = useState<Map<number, string>>(new Map());
+  const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  const [editedScore, setEditedScore] = useState("");
 
   const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
   const leaderScore = sortedPlayers[0]?.score || 0;
@@ -90,6 +96,22 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber }: Leaderbo
     return "bg-card border-border";
   };
 
+  const handleEditClick = (player: Player) => {
+    setEditingPlayer(player);
+    setEditedScore(player.score.toString());
+  };
+
+  const handleSaveEdit = () => {
+    if (editingPlayer && onEditScore) {
+      const newScore = parseInt(editedScore) || 0;
+      if (newScore >= 0) {
+        onEditScore(editingPlayer.id, newScore);
+        setEditingPlayer(null);
+        setEditedScore("");
+      }
+    }
+  };
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between text-foreground mb-4">
@@ -154,16 +176,57 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber }: Leaderbo
                 </div>
               </div>
 
-              <div className="text-right">
-                <div className="text-3xl font-bold text-primary">
-                  {player.score}
+              <div className="text-right flex items-center gap-2">
+                <div>
+                  <div className="text-3xl font-bold text-primary">
+                    {player.score}
+                  </div>
+                  <div className="text-xs text-muted-foreground">puntos</div>
                 </div>
-                <div className="text-xs text-muted-foreground">puntos</div>
+                {onEditScore && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={() => handleEditClick(player)}
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
             </div>
           </Card>
         );
       })}
+
+      <Dialog open={!!editingPlayer} onOpenChange={() => setEditingPlayer(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar puntaje de {editingPlayer?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Nuevo puntaje</label>
+              <Input
+                type="number"
+                min="0"
+                value={editedScore}
+                onChange={(e) => setEditedScore(e.target.value)}
+                className="text-2xl text-center font-bold"
+                autoFocus
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingPlayer(null)}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSaveEdit}>
+              Guardar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -64,6 +64,19 @@ const Index = () => {
     // This is called when a player's position changes in the leaderboard
   };
 
+  const handleEditScore = (playerId: number, newScore: number) => {
+    setPlayers(prev =>
+      prev.map(p =>
+        p.id === playerId
+          ? { ...p, score: newScore }
+          : p
+      )
+    );
+    toast.success("Puntaje actualizado", {
+      duration: 2000,
+    });
+  };
+
   if (!gameStarted) {
     return <PlayerSetup onStart={handleStartGame} />;
   }
@@ -91,7 +104,7 @@ const Index = () => {
           onSubmitScore={handleSubmitScore}
         />
 
-        <Leaderboard players={players} onPositionChange={handlePositionChange} roundNumber={roundNumber} />
+        <Leaderboard players={players} onPositionChange={handlePositionChange} roundNumber={roundNumber} onEditScore={handleEditScore} />
       </div>
 
       <ConfirmDialog
