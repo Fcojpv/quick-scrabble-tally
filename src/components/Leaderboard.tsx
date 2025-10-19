@@ -11,6 +11,7 @@ interface Player {
 interface LeaderboardProps {
   players: Player[];
   onPositionChange?: () => void;
+  roundNumber: number;
 }
 
 // Emojis for different position changes
@@ -18,7 +19,7 @@ const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "�
 const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
 const MAINTAIN_EMOJI = "😉";
 
-export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => {
+export const Leaderboard = ({ players, onPositionChange, roundNumber }: LeaderboardProps) => {
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
   const [playerEmojis, setPlayerEmojis] = useState<Map<number, string>>(new Map());
@@ -91,9 +92,14 @@ export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => 
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-2 text-foreground mb-4">
-        <Trophy className="w-5 h-5 text-primary" />
-        <h2 className="text-lg font-semibold">Tabla de Posiciones</h2>
+      <div className="flex items-center justify-between text-foreground mb-4">
+        <div className="flex items-center gap-2">
+          <Trophy className="w-5 h-5 text-primary" />
+          <h2 className="text-lg font-semibold">Tabla de Posiciones</h2>
+        </div>
+        <div className="text-sm font-medium text-muted-foreground">
+          Ronda {roundNumber}
+        </div>
       </div>
 
       {sortedPlayers.map((player, index) => {

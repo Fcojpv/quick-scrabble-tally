@@ -18,6 +18,7 @@ const Index = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [roundNumber, setRoundNumber] = useState(1);
 
   const handleStartGame = (players: Player[]) => {
     setPlayers(players);
@@ -41,13 +42,20 @@ const Index = () => {
       duration: 2000,
     });
 
-    setCurrentTurn((prev) => (prev + 1) % players.length);
+    const nextTurn = (currentTurn + 1) % players.length;
+    setCurrentTurn(nextTurn);
+    
+    // Increment round when all players have played
+    if (nextTurn === 0) {
+      setRoundNumber(prev => prev + 1);
+    }
   };
 
   const handleReset = () => {
     setGameStarted(false);
     setPlayers([]);
     setCurrentTurn(0);
+    setRoundNumber(1);
     setShowResetDialog(false);
     toast.info("Juego reiniciado");
   };
@@ -83,7 +91,7 @@ const Index = () => {
           onSubmitScore={handleSubmitScore}
         />
 
-        <Leaderboard players={players} onPositionChange={handlePositionChange} />
+        <Leaderboard players={players} onPositionChange={handlePositionChange} roundNumber={roundNumber} />
       </div>
 
       <ConfirmDialog
