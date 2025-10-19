@@ -6,10 +6,11 @@ import { CheckCircle2 } from "lucide-react";
 
 interface TurnInputProps {
   currentPlayer: number;
+  currentPlayerName: string;
   onSubmitScore: (score: number) => void;
 }
 
-export const TurnInput = ({ currentPlayer, onSubmitScore }: TurnInputProps) => {
+export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: TurnInputProps) => {
   const [score, setScore] = useState("");
 
   const handleSubmit = () => {
@@ -32,7 +33,7 @@ export const TurnInput = ({ currentPlayer, onSubmitScore }: TurnInputProps) => {
         <div className="text-center">
           <div className="inline-block px-4 py-2 bg-primary rounded-full mb-3">
             <span className="text-primary-foreground font-bold text-lg">
-              Turno: Jugador {currentPlayer}
+              Turno: {currentPlayerName}
             </span>
           </div>
           <p className="text-sm text-muted-foreground">Ingresa el puntaje obtenido</p>

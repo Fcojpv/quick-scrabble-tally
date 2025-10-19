@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 interface Player {
   id: number;
+  name: string;
   score: number;
 }
 
@@ -12,9 +13,15 @@ interface LeaderboardProps {
   onPositionChange?: () => void;
 }
 
+// Emojis for different position changes
+const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "🔥", "⭐", "🎯"];
+const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
+const MAINTAIN_EMOJI = "😉";
+
 export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => {
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
+  const [playerEmojis, setPlayerEmojis] = useState<Map<number, string>>(new Map());
 
   const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
   const leaderScore = sortedPlayers[0]?.score || 0;
@@ -27,18 +34,41 @@ export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => 
       
       if (changed) {
         const improvedPlayers = new Set<number>();
+        const newEmojis = new Map<number, string>();
+        
         currentRankings.forEach((id, newRank) => {
           const oldRank = previousRankings.indexOf(id);
-          if (oldRank > newRank && newRank < 3) {
-            improvedPlayers.add(id);
+          
+          if (oldRank !== -1) {
+            if (oldRank > newRank) {
+              // Player improved position - show happy emoji
+              const randomHappyEmoji = HAPPY_EMOJIS[Math.floor(Math.random() * HAPPY_EMOJIS.length)];
+              newEmojis.set(id, randomHappyEmoji);
+              if (newRank < 3) {
+                improvedPlayers.add(id);
+              }
+            } else if (oldRank < newRank) {
+              // Player dropped position - show upset emoji
+              const randomUpsetEmoji = UPSET_EMOJIS[Math.floor(Math.random() * UPSET_EMOJIS.length)];
+              newEmojis.set(id, randomUpsetEmoji);
+            } else {
+              // Player maintained position - show wink emoji
+              newEmojis.set(id, MAINTAIN_EMOJI);
+            }
           }
         });
 
+        setPlayerEmojis(newEmojis);
+        
         if (improvedPlayers.size > 0) {
           setCelebratingPlayers(improvedPlayers);
           onPositionChange?.();
-          setTimeout(() => setCelebratingPlayers(new Set()), 600);
         }
+        
+        setTimeout(() => {
+          setCelebratingPlayers(new Set());
+          setPlayerEmojis(new Map());
+        }, 2000);
       }
     }
 
@@ -69,6 +99,7 @@ export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => 
       {sortedPlayers.map((player, index) => {
         const difference = leaderScore - player.score;
         const isCelebrating = celebratingPlayers.has(player.id);
+        const playerEmoji = playerEmojis.get(player.id);
 
         return (
           <Card
@@ -97,8 +128,11 @@ export const Leaderboard = ({ players, onPositionChange }: LeaderboardProps) => 
                 </div>
                 
                 <div>
-                  <div className="font-semibold text-foreground">
-                    Jugador {player.id}
+                  <div className="flex items-center gap-2 font-semibold text-foreground">
+                    <span>{player.name}</span>
+                    {playerEmoji && (
+                      <span className="text-lg animate-fade-in">{playerEmoji}</span>
+                    )}
                   </div>
                   {difference > 0 && (
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">

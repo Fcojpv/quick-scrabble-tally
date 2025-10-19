@@ -9,6 +9,7 @@ import { toast } from "sonner";
 
 interface Player {
   id: number;
+  name: string;
   score: number;
 }
 
@@ -18,12 +19,8 @@ const Index = () => {
   const [currentTurn, setCurrentTurn] = useState(0);
   const [showResetDialog, setShowResetDialog] = useState(false);
 
-  const handleStartGame = (playerCount: number) => {
-    const newPlayers: Player[] = Array.from({ length: playerCount }, (_, i) => ({
-      id: i + 1,
-      score: 0,
-    }));
-    setPlayers(newPlayers);
+  const handleStartGame = (players: Player[]) => {
+    setPlayers(players);
     setCurrentTurn(0);
     setGameStarted(true);
   };
@@ -39,7 +36,8 @@ const Index = () => {
       )
     );
 
-    toast.success(`Jugador ${currentPlayerId}: +${score} puntos`, {
+    const playerName = players.find(p => p.id === currentPlayerId)?.name || `Jugador ${currentPlayerId}`;
+    toast.success(`${playerName}: +${score} puntos`, {
       duration: 2000,
     });
 
@@ -81,6 +79,7 @@ const Index = () => {
 
         <TurnInput
           currentPlayer={currentPlayer.id}
+          currentPlayerName={currentPlayer.name}
           onSubmitScore={handleSubmitScore}
         />
 
