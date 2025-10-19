@@ -59,12 +59,12 @@ export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: T
         </div>
 
         <div className="flex gap-2 flex-wrap">
-          {[5, 10, 15, 20, 25, 30].map((quickScore) => (
+          {[1, 5, 10, 15, 20].map((quickScore) => (
             <Button
               key={quickScore}
               variant="outline"
               size="sm"
-              onClick={() => setScore(quickScore.toString())}
+              onClick={() => setScore((prev) => (parseInt(prev || "0") + quickScore).toString())}
               className="flex-1 min-w-[60px]"
             >
               +{quickScore}
