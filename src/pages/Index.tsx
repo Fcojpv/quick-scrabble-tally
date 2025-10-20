@@ -3,9 +3,11 @@ import { PlayerSetup } from "@/components/PlayerSetup";
 import { Leaderboard } from "@/components/Leaderboard";
 import { TurnInput } from "@/components/TurnInput";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { SettingsMenu } from "@/components/SettingsMenu";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Player {
   id: number;
@@ -14,6 +16,7 @@ interface Player {
 }
 
 const Index = () => {
+  const { t } = useLanguage();
   const [gameStarted, setGameStarted] = useState(false);
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
@@ -37,8 +40,8 @@ const Index = () => {
       )
     );
 
-    const playerName = players.find(p => p.id === currentPlayerId)?.name || `Jugador ${currentPlayerId}`;
-    toast.success(`${playerName}: +${score} puntos`, {
+    const playerName = players.find(p => p.id === currentPlayerId)?.name || `${t.player} ${currentPlayerId}`;
+    toast.success(`${playerName}: +${score} ${t.points}`, {
       duration: 2000,
     });
 
@@ -57,7 +60,7 @@ const Index = () => {
     setCurrentTurn(0);
     setRoundNumber(1);
     setShowResetDialog(false);
-    toast.info("Juego reiniciado");
+    toast.info(t.gameReset);
   };
 
   const handlePositionChange = () => {
@@ -72,7 +75,7 @@ const Index = () => {
           : p
       )
     );
-    toast.success("Puntaje actualizado", {
+    toast.success(t.scoreUpdated, {
       duration: 2000,
     });
   };
@@ -87,15 +90,18 @@ const Index = () => {
     <div className="min-h-screen bg-background p-4 pb-20">
       <div className="max-w-2xl mx-auto space-y-6 animate-slide-up">
         <div className="flex justify-between items-center pt-4">
-          <h1 className="text-2xl font-bold text-foreground">Scrabble Score</h1>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowResetDialog(true)}
-          >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Reiniciar
-          </Button>
+          <h1 className="text-2xl font-bold text-foreground">{t.scrabbleScore}</h1>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowResetDialog(true)}
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              {t.reset}
+            </Button>
+            <SettingsMenu />
+          </div>
         </div>
 
         <TurnInput

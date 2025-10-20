@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -16,20 +17,21 @@ interface ConfirmDialogProps {
 }
 
 export const ConfirmDialog = ({ open, onOpenChange, onConfirm }: ConfirmDialogProps) => {
+  const { t } = useLanguage();
+  
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>¿Reiniciar el juego?</AlertDialogTitle>
+          <AlertDialogTitle>{t.resetGame}</AlertDialogTitle>
           <AlertDialogDescription>
-            Esta acción borrará todos los puntajes y reiniciará el juego. 
-            Esta acción no se puede deshacer.
+            {t.resetConfirmation} {t.cannotUndo}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel>{t.cancel}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>
-            Sí, reiniciar
+            {t.yes}, {t.reset.toLowerCase()}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

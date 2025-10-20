@@ -7,8 +7,8 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
-    /* Scrabble-inspired warm color palette */
+  /* Classic Scrabble Theme - Warm burgundy and beige */
+  :root[data-theme="classic"] {
     --background: 35 25% 92%;
     --foreground: 25 35% 15%;
 
@@ -18,19 +18,15 @@ All colors MUST be HSL.
     --popover: 40 30% 96%;
     --popover-foreground: 25 35% 15%;
 
-    /* Deep burgundy for primary actions */
     --primary: 355 45% 35%;
     --primary-foreground: 40 30% 96%;
 
-    /* Soft beige for secondary */
     --secondary: 35 20% 85%;
     --secondary-foreground: 25 35% 15%;
 
-    /* Muted tan tones */
     --muted: 35 15% 88%;
     --muted-foreground: 25 20% 45%;
 
-    /* Muted blue accent (like letter multiplier) */
     --accent: 200 35% 75%;
     --accent-foreground: 25 35% 15%;
 
@@ -43,13 +39,140 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
-    /* Gold for leader/first place */
     --gold: 45 95% 55%;
     --gold-foreground: 25 35% 15%;
 
-    /* Celebration colors */
     --celebrate: 280 65% 65%;
     
+    --sidebar-background: 35 25% 92%;
+    --sidebar-foreground: 25 35% 15%;
+    --sidebar-primary: 355 45% 35%;
+    --sidebar-primary-foreground: 40 30% 96%;
+    --sidebar-accent: 35 20% 85%;
+    --sidebar-accent-foreground: 25 35% 15%;
+    --sidebar-border: 35 20% 82%;
+    --sidebar-ring: 355 45% 35%;
+  }
+
+  /* Deluxe Scrabble Theme - Rich green and gold */
+  :root[data-theme="deluxe"] {
+    --background: 140 15% 92%;
+    --foreground: 140 60% 10%;
+
+    --card: 140 20% 96%;
+    --card-foreground: 140 60% 10%;
+
+    --popover: 140 20% 96%;
+    --popover-foreground: 140 60% 10%;
+
+    --primary: 140 70% 25%;
+    --primary-foreground: 45 100% 95%;
+
+    --secondary: 45 95% 60%;
+    --secondary-foreground: 140 60% 10%;
+
+    --muted: 140 10% 88%;
+    --muted-foreground: 140 30% 40%;
+
+    --accent: 0 70% 45%;
+    --accent-foreground: 45 100% 95%;
+
+    --destructive: 0 75% 45%;
+    --destructive-foreground: 45 100% 95%;
+
+    --border: 140 20% 80%;
+    --input: 140 10% 88%;
+    --ring: 140 70% 25%;
+
+    --radius: 0.75rem;
+
+    --gold: 45 100% 50%;
+    --gold-foreground: 140 60% 10%;
+
+    --celebrate: 280 70% 60%;
+    
+    --sidebar-background: 140 15% 92%;
+    --sidebar-foreground: 140 60% 10%;
+    --sidebar-primary: 140 70% 25%;
+    --sidebar-primary-foreground: 45 100% 95%;
+    --sidebar-accent: 45 95% 60%;
+    --sidebar-accent-foreground: 140 60% 10%;
+    --sidebar-border: 140 20% 80%;
+    --sidebar-ring: 140 70% 25%;
+  }
+
+  /* Vintage Scrabble Theme - Brown and cream */
+  :root[data-theme="vintage"] {
+    --background: 30 20% 90%;
+    --foreground: 30 30% 20%;
+
+    --card: 30 25% 94%;
+    --card-foreground: 30 30% 20%;
+
+    --popover: 30 25% 94%;
+    --popover-foreground: 30 30% 20%;
+
+    --primary: 30 40% 30%;
+    --primary-foreground: 45 80% 85%;
+
+    --secondary: 45 50% 75%;
+    --secondary-foreground: 30 30% 20%;
+
+    --muted: 30 15% 85%;
+    --muted-foreground: 30 20% 45%;
+
+    --accent: 30 35% 55%;
+    --accent-foreground: 45 80% 85%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 45 80% 85%;
+
+    --border: 30 20% 78%;
+    --input: 30 15% 85%;
+    --ring: 30 40% 30%;
+
+    --radius: 0.75rem;
+
+    --gold: 45 85% 55%;
+    --gold-foreground: 30 30% 20%;
+
+    --celebrate: 280 55% 60%;
+    
+    --sidebar-background: 30 20% 90%;
+    --sidebar-foreground: 30 30% 20%;
+    --sidebar-primary: 30 40% 30%;
+    --sidebar-primary-foreground: 45 80% 85%;
+    --sidebar-accent: 45 50% 75%;
+    --sidebar-accent-foreground: 30 30% 20%;
+    --sidebar-border: 30 20% 78%;
+    --sidebar-ring: 30 40% 30%;
+  }
+
+  /* Default to classic theme */
+  :root {
+    --background: 35 25% 92%;
+    --foreground: 25 35% 15%;
+    --card: 40 30% 96%;
+    --card-foreground: 25 35% 15%;
+    --popover: 40 30% 96%;
+    --popover-foreground: 25 35% 15%;
+    --primary: 355 45% 35%;
+    --primary-foreground: 40 30% 96%;
+    --secondary: 35 20% 85%;
+    --secondary-foreground: 25 35% 15%;
+    --muted: 35 15% 88%;
+    --muted-foreground: 25 20% 45%;
+    --accent: 200 35% 75%;
+    --accent-foreground: 25 35% 15%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 30% 96%;
+    --border: 35 20% 82%;
+    --input: 35 20% 88%;
+    --ring: 355 45% 35%;
+    --radius: 0.75rem;
+    --gold: 45 95% 55%;
+    --gold-foreground: 25 35% 15%;
+    --celebrate: 280 65% 65%;
     --sidebar-background: 35 25% 92%;
     --sidebar-foreground: 25 35% 15%;
     --sidebar-primary: 355 45% 35%;

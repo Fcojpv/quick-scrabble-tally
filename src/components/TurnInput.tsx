@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { CheckCircle2, X } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface TurnInputProps {
   currentPlayer: number;
@@ -11,6 +12,7 @@ interface TurnInputProps {
 }
 
 export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: TurnInputProps) => {
+  const { t } = useLanguage();
   const [score, setScore] = useState("");
 
   const handleSubmit = () => {
@@ -35,21 +37,18 @@ export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: T
     <Card className="p-6 border-2 border-primary/20 bg-card/50 backdrop-blur">
       <div className="space-y-4">
         <div className="text-center">
-          <div className="inline-block px-4 py-2 bg-primary rounded-full mb-3">
-            <span className="text-primary-foreground font-bold text-lg">
-              Turno: {currentPlayerName}
-            </span>
-          </div>
-          <p className="text-sm text-muted-foreground">Ingresa el puntaje obtenido</p>
+          <h3 className="text-lg font-semibold text-muted-foreground">{t.turn}</h3>
+          <p className="text-3xl font-bold text-primary animate-pulse-subtle">
+            {currentPlayerName}
+          </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-2 items-center">
           <Input
             type="number"
-            min="0"
-            placeholder="0"
             value={score}
             onChange={(e) => setScore(e.target.value)}
+            placeholder={t.enterScore}
             onKeyPress={handleKeyPress}
             className="text-2xl text-center font-bold h-14"
           />

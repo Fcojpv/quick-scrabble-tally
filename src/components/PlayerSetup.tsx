@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Users, ChevronLeft } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { SettingsMenu } from "@/components/SettingsMenu";
 
 interface PlayerSetupProps {
   onStart: (players: { id: number; name: string; score: number }[]) => void;
 }
 
 export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
+  const { t } = useLanguage();
   const [selectedCount, setSelectedCount] = useState(1);
   const [step, setStep] = useState<'count' | 'names'>('count');
   const [playerNames, setPlayerNames] = useState<string[]>([]);
@@ -30,7 +33,7 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
   const handleStart = () => {
     const players = playerNames.map((name, i) => ({
       id: i + 1,
-      name: name.trim() || `Jugador ${i + 1}`,
+      name: name.trim() || `${t.player} ${i + 1}`,
       score: 0
     }));
     onStart(players);
@@ -38,7 +41,10 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
 
   if (step === 'names') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background relative">
+        <div className="absolute top-4 right-4">
+          <SettingsMenu />
+        </div>
         <Card className="w-full max-w-md p-8 space-y-6 animate-slide-up">
           <div className="text-center space-y-2">
             <div className="flex items-center justify-between mb-4">
@@ -54,19 +60,19 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
               </div>
               <div className="w-16" />
             </div>
-            <h1 className="text-3xl font-bold text-foreground">Nombres</h1>
-            <p className="text-muted-foreground">Ingresa el nombre de cada jugador</p>
+            <h1 className="text-3xl font-bold text-foreground">{t.names}</h1>
+            <p className="text-muted-foreground">{t.enterPlayerName}</p>
           </div>
 
           <div className="space-y-3">
             {playerNames.map((name, index) => (
               <div key={index} className="space-y-1">
                 <label className="text-sm text-muted-foreground">
-                  Jugador {index + 1}
+                  {t.player} {index + 1}
                 </label>
                 <Input
                   type="text"
-                  placeholder={`Jugador ${index + 1}`}
+                  placeholder={`${t.player} ${index + 1}`}
                   value={name}
                   onChange={(e) => handleNameChange(index, e.target.value)}
                   className="text-center font-medium"
@@ -80,7 +86,7 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
             size="lg" 
             className="w-full"
           >
-            Comenzar Juego
+            {t.startGame}
           </Button>
         </Card>
       </div>
@@ -88,7 +94,10 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-background relative">
+      <div className="absolute top-4 right-4">
+        <SettingsMenu />
+      </div>
       <Card className="w-full max-w-md p-8 space-y-6 animate-slide-up">
         <div className="text-center space-y-2">
           <div className="flex justify-center mb-4">
@@ -96,8 +105,8 @@ export const PlayerSetup = ({ onStart }: PlayerSetupProps) => {
               <Users className="w-8 h-8 text-primary" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-foreground">Scrabble Score</h1>
-          <p className="text-muted-foreground">¿Cuántos jugadores?</p>
+          <h1 className="text-3xl font-bold text-foreground">{t.scrabbleScore}</h1>
+          <p className="text-muted-foreground">{t.howManyPlayers}</p>
         </div>
 
         <div className="grid grid-cols-4 gap-3">

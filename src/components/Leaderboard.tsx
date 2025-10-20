@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Player {
   id: number;
@@ -25,6 +26,7 @@ const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "�
 const MAINTAIN_EMOJI = "😉";
 
 export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore }: LeaderboardProps) => {
+  const { t } = useLanguage();
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
   const [playerEmojis, setPlayerEmojis] = useState<Map<number, string>>(new Map());
@@ -134,10 +136,10 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
       <div className="flex items-center justify-between text-foreground mb-4">
         <div className="flex items-center gap-2">
           <Trophy className="w-5 h-5 text-primary" />
-          <h2 className="text-lg font-semibold">Tabla de Posiciones</h2>
+          <h2 className="text-lg font-semibold">{t.leaderboard}</h2>
         </div>
         <div className="text-sm font-medium text-muted-foreground">
-          Ronda {roundNumber}
+          {t.round} {roundNumber}
         </div>
       </div>
 
@@ -202,12 +204,12 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                   {difference > 0 && (
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
                       <TrendingUp className="w-3 h-3" />
-                      <span>-{difference} del líder</span>
+                      <span>-{difference} {t.fromLeader}</span>
                     </div>
                   )}
                   {difference === 0 && displayIndex > 0 && (
                     <div className="text-sm text-muted-foreground">
-                      Empate con líder
+                      {t.tiedWithLeader}
                     </div>
                   )}
                 </div>
@@ -218,7 +220,7 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                   <div className="text-3xl font-bold text-primary">
                     {player.score}
                   </div>
-                  <div className="text-xs text-muted-foreground">puntos</div>
+                  <div className="text-xs text-muted-foreground">{t.points}</div>
                 </div>
                 {onEditScore && (
                   <Button
@@ -241,11 +243,11 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
       <Dialog open={!!editingPlayer} onOpenChange={() => setEditingPlayer(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Editar puntaje de {editingPlayer?.name}</DialogTitle>
+            <DialogTitle>{t.editScore} {editingPlayer?.name}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Nuevo puntaje</label>
+              <label className="text-sm font-medium">{t.newScore}</label>
               <Input
                 type="number"
                 min="0"
@@ -258,10 +260,10 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditingPlayer(null)}>
-              Cancelar
+              {t.cancel}
             </Button>
             <Button onClick={handleSaveEdit}>
-              Guardar
+              {t.save}
             </Button>
           </DialogFooter>
         </DialogContent>
