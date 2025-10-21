@@ -5,9 +5,17 @@ import { TurnInput } from "@/components/TurnInput";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { SettingsMenu } from "@/components/SettingsMenu";
 import { Button } from "@/components/ui/button";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Clock, Hourglass } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useGameTimer } from "@/hooks/useGameTimer";
+import { useTurnTimer } from "@/hooks/useTurnTimer";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Player {
   id: number;
@@ -22,6 +30,9 @@ const Index = () => {
   const [currentTurn, setCurrentTurn] = useState(0);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [roundNumber, setRoundNumber] = useState(1);
+  
+  const { formatTime: formatGameTime } = useGameTimer(gameStarted);
+  const turnTimer = useTurnTimer(currentTurn, gameStarted);
 
   const handleStartGame = (players: Player[]) => {
     setPlayers(players);
@@ -60,6 +71,7 @@ const Index = () => {
     setCurrentTurn(0);
     setRoundNumber(1);
     setShowResetDialog(false);
+    turnTimer.stopTimer();
     toast.info(t.gameReset);
   };
 
@@ -90,8 +102,40 @@ const Index = () => {
     <div className="min-h-screen bg-background p-4 pb-20">
       <div className="max-w-2xl mx-auto space-y-6 animate-slide-up">
         <div className="flex justify-between items-center pt-4">
-          <h1 className="text-2xl font-bold text-foreground">{t.scrabbleScore}</h1>
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-bold text-foreground">{t.scrabbleScore}</h1>
+            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{formatGameTime()}</span>
+            </div>
+          </div>
           <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Hourglass className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur">
+                {[1, 2, 3, 4, 5].map((minutes) => (
+                  <DropdownMenuItem
+                    key={minutes}
+                    onClick={() => turnTimer.startTimer(minutes)}
+                    className="cursor-pointer"
+                  >
+                    {minutes} {minutes === 1 ? t.minute : t.minutes}
+                  </DropdownMenuItem>
+                ))}
+                {turnTimer.isActive && (
+                  <DropdownMenuItem
+                    onClick={() => turnTimer.stopTimer()}
+                    className="cursor-pointer text-destructive"
+                  >
+                    {t.stopTimer}
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button
               variant="outline"
               size="sm"
@@ -108,6 +152,9 @@ const Index = () => {
           currentPlayer={currentPlayer.id}
           currentPlayerName={currentPlayer.name}
           onSubmitScore={handleSubmitScore}
+          timerDisplay={turnTimer.formatTime()}
+          timerColorClass={turnTimer.getColorClass()}
+          isTimerFinished={turnTimer.isFinished}
         />
 
         <Leaderboard players={players} onPositionChange={handlePositionChange} roundNumber={roundNumber} onEditScore={handleEditScore} />

@@ -9,9 +9,19 @@ interface TurnInputProps {
   currentPlayer: number;
   currentPlayerName: string;
   onSubmitScore: (score: number) => void;
+  timerDisplay: string | null;
+  timerColorClass: string;
+  isTimerFinished: boolean;
 }
 
-export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: TurnInputProps) => {
+export const TurnInput = ({ 
+  currentPlayer, 
+  currentPlayerName, 
+  onSubmitScore,
+  timerDisplay,
+  timerColorClass,
+  isTimerFinished 
+}: TurnInputProps) => {
   const { t } = useLanguage();
   const [score, setScore] = useState("");
 
@@ -34,7 +44,17 @@ export const TurnInput = ({ currentPlayer, currentPlayerName, onSubmitScore }: T
   };
 
   return (
-    <Card className="p-6 border-2 border-primary/20 bg-card/50 backdrop-blur">
+    <Card className="p-6 border-2 border-primary/20 bg-card/50 backdrop-blur relative">
+      {timerDisplay && (
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          <span className={`text-2xl font-bold font-mono ${timerColorClass} transition-colors`}>
+            {timerDisplay}
+          </span>
+          {isTimerFinished && (
+            <span className="text-2xl animate-bounce">🔔</span>
+          )}
+        </div>
+      )}
       <div className="space-y-4">
         <div className="text-center">
           <h3 className="text-lg font-semibold text-muted-foreground">{t.turn}</h3>

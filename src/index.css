@@ -44,6 +44,10 @@ All colors MUST be HSL.
 
     --celebrate: 280 65% 65%;
     
+    --timer-safe: 140 65% 45%;
+    --timer-warning: 45 95% 50%;
+    --timer-danger: 0 70% 50%;
+    
     --sidebar-background: 35 25% 92%;
     --sidebar-foreground: 25 35% 15%;
     --sidebar-primary: 355 45% 35%;
@@ -90,6 +94,10 @@ All colors MUST be HSL.
     --gold-foreground: 140 60% 10%;
 
     --celebrate: 280 70% 60%;
+    
+    --timer-safe: 140 70% 35%;
+    --timer-warning: 45 100% 45%;
+    --timer-danger: 0 75% 45%;
     
     --sidebar-background: 140 15% 92%;
     --sidebar-foreground: 140 60% 10%;
@@ -138,6 +146,10 @@ All colors MUST be HSL.
 
     --celebrate: 280 55% 60%;
     
+    --timer-safe: 140 50% 40%;
+    --timer-warning: 45 85% 45%;
+    --timer-danger: 0 65% 45%;
+    
     --sidebar-background: 30 20% 90%;
     --sidebar-foreground: 30 30% 20%;
     --sidebar-primary: 30 40% 30%;
@@ -173,6 +185,9 @@ All colors MUST be HSL.
     --gold: 45 95% 55%;
     --gold-foreground: 25 35% 15%;
     --celebrate: 280 65% 65%;
+    --timer-safe: 140 65% 45%;
+    --timer-warning: 45 95% 50%;
+    --timer-danger: 0 70% 50%;
     --sidebar-background: 35 25% 92%;
     --sidebar-foreground: 25 35% 15%;
     --sidebar-primary: 355 45% 35%;
@@ -216,6 +231,10 @@ All colors MUST be HSL.
     --gold-foreground: 25 35% 15%;
 
     --celebrate: 280 60% 60%;
+    
+    --timer-safe: 140 60% 50%;
+    --timer-warning: 45 90% 55%;
+    --timer-danger: 0 70% 50%;
     
     --sidebar-background: 25 25% 12%;
     --sidebar-foreground: 40 30% 96%;

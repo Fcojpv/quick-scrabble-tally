@@ -35,6 +35,11 @@ export interface Translations {
   gameReset: string;
   scoreUpdated: string;
   
+  // Timer
+  minute: string;
+  minutes: string;
+  stopTimer: string;
+  
   // Settings
   settings: string;
   colorTheme: string;
@@ -70,6 +75,9 @@ export const translations: Record<Language, Translations> = {
     reset: 'Reset',
     gameReset: 'Game reset',
     scoreUpdated: 'Score updated',
+    minute: 'minute',
+    minutes: 'minutes',
+    stopTimer: 'Stop timer',
     settings: 'Settings',
     colorTheme: 'Color Theme',
     language: 'Language',
@@ -102,6 +110,9 @@ export const translations: Record<Language, Translations> = {
     reset: 'Reiniciar',
     gameReset: 'Juego reiniciado',
     scoreUpdated: 'Puntaje actualizado',
+    minute: 'minuto',
+    minutes: 'minutos',
+    stopTimer: 'Detener temporizador',
     settings: 'Configuración',
     colorTheme: 'Tema de Color',
     language: 'Idioma',
@@ -134,6 +145,9 @@ export const translations: Record<Language, Translations> = {
     reset: '重置',
     gameReset: '游戏已重置',
     scoreUpdated: '分数已更新',
+    minute: '分钟',
+    minutes: '分钟',
+    stopTimer: '停止计时器',
     settings: '设置',
     colorTheme: '颜色主题',
     language: '语言',
@@ -166,6 +180,9 @@ export const translations: Record<Language, Translations> = {
     reset: 'रीसेट',
     gameReset: 'खेल रीसेट हो गया',
     scoreUpdated: 'स्कोर अपडेट हो गया',
+    minute: 'मिनट',
+    minutes: 'मिनट',
+    stopTimer: 'टाइमर बंद करें',
     settings: 'सेटिंग्स',
     colorTheme: 'रंग थीम',
     language: 'भाषा',
@@ -198,6 +215,9 @@ export const translations: Record<Language, Translations> = {
     reset: 'إعادة تعيين',
     gameReset: 'تم إعادة تعيين اللعبة',
     scoreUpdated: 'تم تحديث النتيجة',
+    minute: 'دقيقة',
+    minutes: 'دقائق',
+    stopTimer: 'إيقاف المؤقت',
     settings: 'الإعدادات',
     colorTheme: 'موضوع اللون',
     language: 'اللغة',
@@ -230,6 +250,9 @@ export const translations: Record<Language, Translations> = {
     reset: 'Reiniciar',
     gameReset: 'Jogo reiniciado',
     scoreUpdated: 'Pontuação atualizada',
+    minute: 'minuto',
+    minutes: 'minutos',
+    stopTimer: 'Parar cronômetro',
     settings: 'Configurações',
     colorTheme: 'Tema de Cores',
     language: 'Idioma',
