@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PlayerSetup } from "@/components/PlayerSetup";
 import { Leaderboard } from "@/components/Leaderboard";
 import { TurnInput } from "@/components/TurnInput";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { SettingsMenu } from "@/components/SettingsMenu";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Clock, Hourglass } from "lucide-react";
+import { RotateCcw, Clock, Hourglass, Music } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGameTimer } from "@/hooks/useGameTimer";
@@ -30,9 +30,31 @@ const Index = () => {
   const [currentTurn, setCurrentTurn] = useState(0);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [roundNumber, setRoundNumber] = useState(1);
+  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const { formatTime: formatGameTime } = useGameTimer(gameStarted);
   const turnTimer = useTurnTimer(currentTurn, gameStarted);
+
+  const toggleRadio = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio("https://stream.zeno.fm/v2wvrmeknm0uv");
+      audioRef.current.volume = 0.5;
+    }
+
+    if (isRadioPlaying) {
+      audioRef.current.pause();
+      setIsRadioPlaying(false);
+      toast.info("Radio detenida");
+    } else {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing radio:", error);
+        toast.error("Error al reproducir la radio");
+      });
+      setIsRadioPlaying(true);
+      toast.success("Radio iniciada");
+    }
+  };
 
   const handleStartGame = (players: Player[]) => {
     setPlayers(players);
@@ -104,6 +126,21 @@ const Index = () => {
         <div className="flex justify-between items-center pt-2">
           <h1 className="text-2xl font-bold text-foreground">{t.scrabbleScore}</h1>
           <div className="flex items-center gap-2">
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={toggleRadio}
+                className={isRadioPlaying ? "text-orange-500" : ""}
+              >
+                <Music className="w-4 h-4" />
+              </Button>
+              {isRadioPlaying && (
+                <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-semibold text-orange-500 whitespace-nowrap">
+                  live
+                </span>
+              )}
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
