@@ -239,7 +239,7 @@ const Index = () => {
           {currentSlide === 0 && (
             <button
               onClick={() => carouselApi?.scrollNext()}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 text-foreground/20 hover:text-foreground/40 transition-colors"
+              className="absolute right-1 top-1/2 -translate-y-1/2 z-10 text-foreground/20 hover:text-foreground/40 transition-colors"
             >
               <ChevronRight className="w-8 h-8" />
             </button>
@@ -249,7 +249,7 @@ const Index = () => {
           {currentSlide === 1 && (
             <button
               onClick={() => carouselApi?.scrollPrev()}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 text-foreground/20 hover:text-foreground/40 transition-colors"
+              className="absolute left-1 top-1/2 -translate-y-1/2 z-10 text-foreground/20 hover:text-foreground/40 transition-colors"
             >
               <ChevronLeft className="w-8 h-8" />
             </button>
