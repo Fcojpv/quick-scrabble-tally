@@ -3,9 +3,10 @@ import { PlayerSetup } from "@/components/PlayerSetup";
 import { Leaderboard } from "@/components/Leaderboard";
 import { TurnInput } from "@/components/TurnInput";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { KofiDialog } from "@/components/KofiDialog";
 import { SettingsMenu } from "@/components/SettingsMenu";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Clock, Hourglass, Music, ChevronRight, ChevronLeft } from "lucide-react";
+import { RotateCcw, Clock, Hourglass, Music, ChevronRight, ChevronLeft, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGameTimer } from "@/hooks/useGameTimer";
@@ -37,12 +38,38 @@ const Index = () => {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [roundNumber, setRoundNumber] = useState(1);
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [showKofiDialog, setShowKofiDialog] = useState(false);
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const { formatTime: formatGameTime } = useGameTimer(gameStarted);
   const turnTimer = useTurnTimer(currentTurn, gameStarted);
+
+  // Heart animation cycle: 60s empty -> 5s filled -> repeat
+  useEffect(() => {
+    const cycle = () => {
+      // Empty for 60 seconds
+      setIsHeartFilled(false);
+      
+      const fillTimeout = setTimeout(() => {
+        // Filled for 5 seconds
+        setIsHeartFilled(true);
+        
+        const emptyTimeout = setTimeout(() => {
+          cycle(); // Restart cycle
+        }, 5000);
+        
+        return () => clearTimeout(emptyTimeout);
+      }, 60000);
+      
+      return () => clearTimeout(fillTimeout);
+    };
+    
+    const cleanup = cycle();
+    return cleanup;
+  }, []);
 
   // Carousel slide tracking
   useEffect(() => {
@@ -156,6 +183,18 @@ const Index = () => {
                 <div className="flex justify-between items-center pt-2">
                   <h1 className="text-2xl font-bold text-foreground">{t.scrabbleScore}</h1>
                   <div className="flex items-center gap-2">
+                    <Button 
+                      variant="ghost" 
+                      size="icon"
+                      onClick={() => setShowKofiDialog(true)}
+                      className="flex flex-col items-center justify-center gap-0 h-10 p-1"
+                    >
+                      <Heart 
+                        className={`w-4 h-4 transition-all duration-300 ${
+                          isHeartFilled ? "fill-orange-500 text-orange-500" : ""
+                        }`} 
+                      />
+                    </Button>
                     <Button 
                       variant="ghost" 
                       size="icon"
@@ -290,6 +329,18 @@ const Index = () => {
               <Button 
                 variant="ghost" 
                 size="icon"
+                onClick={() => setShowKofiDialog(true)}
+                className="flex flex-col items-center justify-center gap-0 h-10 p-1"
+              >
+                <Heart 
+                  className={`w-4 h-4 transition-all duration-300 ${
+                    isHeartFilled ? "fill-orange-500 text-orange-500" : ""
+                  }`} 
+                />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon"
                 onClick={toggleRadio}
                 className="flex flex-col items-center justify-center gap-0 h-10 p-1"
               >
@@ -369,6 +420,11 @@ const Index = () => {
         open={showResetDialog}
         onOpenChange={setShowResetDialog}
         onConfirm={handleReset}
+      />
+      
+      <KofiDialog
+        open={showKofiDialog}
+        onOpenChange={setShowKofiDialog}
       />
     </div>
   );

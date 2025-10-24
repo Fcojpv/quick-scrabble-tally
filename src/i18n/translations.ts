@@ -47,6 +47,10 @@ export interface Translations {
   classic: string;
   deluxe: string;
   vintage: string;
+  
+  // Ko-fi
+  supportProject: string;
+  supportDescription: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -84,6 +88,8 @@ export const translations: Record<Language, Translations> = {
     classic: 'Classic',
     deluxe: 'Deluxe',
     vintage: 'Vintage',
+    supportProject: 'Support the Project',
+    supportDescription: 'Help us keep improving Scrabble Score. Your support means a lot!',
   },
   es: {
     scrabbleScore: 'Scrabble Score',
@@ -119,6 +125,8 @@ export const translations: Record<Language, Translations> = {
     classic: 'Clásico',
     deluxe: 'Deluxe',
     vintage: 'Vintage',
+    supportProject: 'Apoyar el Proyecto',
+    supportDescription: '¡Ayúdanos a seguir mejorando Scrabble Score. Tu apoyo significa mucho!',
   },
   zh: {
     scrabbleScore: 'Scrabble Score',
@@ -154,6 +162,8 @@ export const translations: Record<Language, Translations> = {
     classic: '经典',
     deluxe: '豪华',
     vintage: '复古',
+    supportProject: '支持项目',
+    supportDescription: '帮助我们继续改进 Scrabble Score。您的支持意义重大！',
   },
   hi: {
     scrabbleScore: 'Scrabble Score',
@@ -189,6 +199,8 @@ export const translations: Record<Language, Translations> = {
     classic: 'क्लासिक',
     deluxe: 'डीलक्स',
     vintage: 'विंटेज',
+    supportProject: 'परियोजना का समर्थन करें',
+    supportDescription: 'Scrabble Score को बेहतर बनाने में हमारी मदद करें। आपका समर्थन बहुत मायने रखता है!',
   },
   ar: {
     scrabbleScore: 'Scrabble Score',
@@ -224,6 +236,8 @@ export const translations: Record<Language, Translations> = {
     classic: 'كلاسيكي',
     deluxe: 'ديلوكس',
     vintage: 'عتيق',
+    supportProject: 'دعم المشروع',
+    supportDescription: 'ساعدنا في الاستمرار في تحسين Scrabble Score. دعمك يعني الكثير!',
   },
   pt: {
     scrabbleScore: 'Scrabble Score',
@@ -259,6 +273,8 @@ export const translations: Record<Language, Translations> = {
     classic: 'Clássico',
     deluxe: 'Deluxe',
     vintage: 'Vintage',
+    supportProject: 'Apoiar o Projeto',
+    supportDescription: 'Ajude-nos a continuar melhorando o Scrabble Score. Seu apoio significa muito!',
   },
 };
 
