@@ -51,6 +51,18 @@ export interface Translations {
   // Ko-fi
   supportProject: string;
   supportDescription: string;
+  
+  // Radio
+  radioStopped: string;
+  radioError: string;
+  radioStarted: string;
+  radioLive: string;
+  
+  // Timer status
+  timerOn: string;
+  
+  // Carousel
+  comingSoon: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -90,6 +102,12 @@ export const translations: Record<Language, Translations> = {
     vintage: 'Vintage',
     supportProject: 'Support the Project',
     supportDescription: 'Help us keep improving Scrabble Score. Your support means a lot!',
+    radioStopped: 'Radio stopped',
+    radioError: 'Error playing radio',
+    radioStarted: 'Radio started',
+    radioLive: 'live',
+    timerOn: 'on',
+    comingSoon: 'Coming soon',
   },
   es: {
     scrabbleScore: 'Scrabble Score',
@@ -127,6 +145,12 @@ export const translations: Record<Language, Translations> = {
     vintage: 'Vintage',
     supportProject: 'Apoyar el Proyecto',
     supportDescription: '¡Ayúdanos a seguir mejorando Scrabble Score. Tu apoyo significa mucho!',
+    radioStopped: 'Radio detenida',
+    radioError: 'Error al reproducir la radio',
+    radioStarted: 'Radio iniciada',
+    radioLive: 'en vivo',
+    timerOn: 'activo',
+    comingSoon: 'Próxima funcionalidad',
   },
   zh: {
     scrabbleScore: 'Scrabble Score',
@@ -164,6 +188,12 @@ export const translations: Record<Language, Translations> = {
     vintage: '复古',
     supportProject: '支持项目',
     supportDescription: '帮助我们继续改进 Scrabble Score。您的支持意义重大！',
+    radioStopped: '电台已停止',
+    radioError: '播放电台时出错',
+    radioStarted: '电台已启动',
+    radioLive: '直播',
+    timerOn: '开启',
+    comingSoon: '即将推出',
   },
   hi: {
     scrabbleScore: 'Scrabble Score',
@@ -201,6 +231,12 @@ export const translations: Record<Language, Translations> = {
     vintage: 'विंटेज',
     supportProject: 'परियोजना का समर्थन करें',
     supportDescription: 'Scrabble Score को बेहतर बनाने में हमारी मदद करें। आपका समर्थन बहुत मायने रखता है!',
+    radioStopped: 'रेडियो बंद हो गया',
+    radioError: 'रेडियो चलाने में त्रुटि',
+    radioStarted: 'रेडियो शुरू हो गया',
+    radioLive: 'लाइव',
+    timerOn: 'चालू',
+    comingSoon: 'जल्द आ रहा है',
   },
   ar: {
     scrabbleScore: 'Scrabble Score',
@@ -238,6 +274,12 @@ export const translations: Record<Language, Translations> = {
     vintage: 'عتيق',
     supportProject: 'دعم المشروع',
     supportDescription: 'ساعدنا في الاستمرار في تحسين Scrabble Score. دعمك يعني الكثير!',
+    radioStopped: 'توقف الراديو',
+    radioError: 'خطأ في تشغيل الراديو',
+    radioStarted: 'بدأ الراديو',
+    radioLive: 'مباشر',
+    timerOn: 'قيد التشغيل',
+    comingSoon: 'قريباً',
   },
   pt: {
     scrabbleScore: 'Scrabble Score',
@@ -275,6 +317,12 @@ export const translations: Record<Language, Translations> = {
     vintage: 'Vintage',
     supportProject: 'Apoiar o Projeto',
     supportDescription: 'Ajude-nos a continuar melhorando o Scrabble Score. Seu apoio significa muito!',
+    radioStopped: 'Rádio parada',
+    radioError: 'Erro ao reproduzir rádio',
+    radioStarted: 'Rádio iniciada',
+    radioLive: 'ao vivo',
+    timerOn: 'ligado',
+    comingSoon: 'Em breve',
   },
 };
 

@@ -89,14 +89,14 @@ const Index = () => {
     if (isRadioPlaying) {
       audioRef.current.pause();
       setIsRadioPlaying(false);
-      toast.info("Radio detenida");
+      toast.info(t.radioStopped);
     } else {
       audioRef.current.play().catch((error) => {
         console.error("Error playing radio:", error);
-        toast.error("Error al reproducir la radio");
+        toast.error(t.radioError);
       });
       setIsRadioPlaying(true);
-      toast.success("Radio iniciada");
+      toast.success(t.radioStarted);
     }
   };
 
@@ -201,12 +201,12 @@ const Index = () => {
                       onClick={toggleRadio}
                       className="flex flex-col items-center justify-center gap-0 h-10 p-1"
                     >
-                      <Music className={`w-4 h-4 ${isRadioPlaying ? "text-orange-500" : ""}`} />
-                      {isRadioPlaying && (
-                        <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
-                          live
-                        </span>
-                      )}
+                    <Music className={`w-4 h-4 ${isRadioPlaying ? "text-orange-500" : ""}`} />
+                    {isRadioPlaying && (
+                      <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
+                        {t.radioLive}
+                      </span>
+                    )}
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -215,12 +215,12 @@ const Index = () => {
                           size="icon"
                           className="flex flex-col items-center justify-center gap-0 h-10 p-1"
                         >
-                          <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
-                          {turnTimer.isActive && (
-                            <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
-                              on
-                            </span>
-                          )}
+                        <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
+                        {turnTimer.isActive && (
+                          <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
+                            {t.timerOn}
+                          </span>
+                        )}
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur">
@@ -277,7 +277,7 @@ const Index = () => {
             <CarouselItem>
               <div className="max-w-2xl mx-auto space-y-3 animate-slide-up min-h-[60vh] flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
-                  <p className="text-lg">Próxima funcionalidad</p>
+                  <p className="text-lg">{t.comingSoon}</p>
                 </div>
               </div>
             </CarouselItem>
@@ -344,12 +344,12 @@ const Index = () => {
                 onClick={toggleRadio}
                 className="flex flex-col items-center justify-center gap-0 h-10 p-1"
               >
-                <Music className={`w-4 h-4 ${isRadioPlaying ? "text-orange-500" : ""}`} />
-                {isRadioPlaying && (
-                  <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
-                    live
-                  </span>
-                )}
+              <Music className={`w-4 h-4 ${isRadioPlaying ? "text-orange-500" : ""}`} />
+              {isRadioPlaying && (
+                <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
+                  {t.radioLive}
+                </span>
+              )}
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -358,12 +358,12 @@ const Index = () => {
                     size="icon"
                     className="flex flex-col items-center justify-center gap-0 h-10 p-1"
                   >
-                    <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
-                    {turnTimer.isActive && (
-                      <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
-                        on
-                      </span>
-                    )}
+                  <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
+                  {turnTimer.isActive && (
+                    <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
+                      {t.timerOn}
+                    </span>
+                  )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur">
