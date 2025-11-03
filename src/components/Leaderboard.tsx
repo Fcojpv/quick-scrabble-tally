@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Trophy, TrendingUp, Pencil, Clock } from "lucide-react";
+import { Trophy, TrendingUp, Pencil, Clock, Bell } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,8 @@ interface LeaderboardProps {
   roundNumber: number;
   onEditScore?: (playerId: number, newScore: number) => void;
   gameTime?: string;
+  gameTimeColor?: string;
+  isGameTimeFinished?: boolean;
 }
 
 // Emojis for different position changes
@@ -27,7 +29,7 @@ const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "�
 const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
 const MAINTAIN_EMOJI = "😉";
 
-export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore, gameTime }: LeaderboardProps) => {
+export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore, gameTime, gameTimeColor, isGameTimeFinished }: LeaderboardProps) => {
   const { t } = useLanguage();
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
@@ -144,9 +146,21 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
         <div className="flex items-center gap-3">
           <ShareButton players={players} roundNumber={roundNumber} />
           {gameTime && (
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-              <Clock className="w-3.5 h-3.5" />
-              <span>{gameTime}</span>
+            <div className="flex flex-col items-center gap-0.5">
+              <div className={`flex items-center gap-1.5 text-sm font-semibold ${gameTimeColor || 'text-muted-foreground'}`}>
+                <Clock className="w-3.5 h-3.5" />
+                <span className="relative">
+                  {gameTime}
+                  {isGameTimeFinished && (
+                    <Bell className="w-2 h-2 absolute -top-1 -right-2.5 text-muted-foreground" />
+                  )}
+                </span>
+              </div>
+              {isGameTimeFinished && (
+                <span className="text-[9px] font-semibold text-muted-foreground leading-none">
+                  {t.timeOut}
+                </span>
+              )}
             </div>
           )}
           <div className="text-sm font-medium text-muted-foreground">

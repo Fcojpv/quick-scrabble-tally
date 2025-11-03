@@ -72,6 +72,9 @@ export interface Translations {
   roundsPlayed: string;
   canYouBeatUs: string;
   playHere: string;
+  turnTimer: string;
+  gameTimer: string;
+  timeOut: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -124,6 +127,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: 'rounds played',
     canYouBeatUs: 'Can you beat us?',
     playHere: 'Play here:',
+    turnTimer: 'Turn Timer',
+    gameTimer: 'Game Timer',
+    timeOut: 'time out',
   },
   es: {
     scrabbleScore: 'Scrabble Score',
@@ -174,6 +180,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: 'rondas jugadas',
     canYouBeatUs: '¿Puedes superarnos?',
     playHere: 'Juega aquí:',
+    turnTimer: 'Tiempo por Turno',
+    gameTimer: 'Tiempo de Partida',
+    timeOut: 'tiempo fuera',
   },
   zh: {
     scrabbleScore: 'Scrabble Score',
@@ -224,6 +233,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: '已玩轮数',
     canYouBeatUs: '你能超越我们吗？',
     playHere: '在此玩：',
+    turnTimer: '回合计时器',
+    gameTimer: '游戏计时器',
+    timeOut: '时间到',
   },
   hi: {
     scrabbleScore: 'Scrabble Score',
@@ -274,6 +286,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: 'राउंड खेले गए',
     canYouBeatUs: 'क्या आप हमें हरा सकते हैं?',
     playHere: 'यहां खेलें:',
+    turnTimer: 'टर्न टाइमर',
+    gameTimer: 'गेम टाइमर',
+    timeOut: 'समय समाप्त',
   },
   ar: {
     scrabbleScore: 'Scrabble Score',
@@ -324,6 +339,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: 'جولات لعبت',
     canYouBeatUs: 'هل يمكنك التفوق علينا؟',
     playHere: 'العب هنا:',
+    turnTimer: 'مؤقت الدور',
+    gameTimer: 'مؤقت اللعبة',
+    timeOut: 'انتهى الوقت',
   },
   pt: {
     scrabbleScore: 'Scrabble Score',
@@ -374,6 +392,9 @@ export const translations: Record<Language, Translations> = {
     roundsPlayed: 'rodadas jogadas',
     canYouBeatUs: 'Você pode nos superar?',
     playHere: 'Jogue aqui:',
+    turnTimer: 'Timer de Turno',
+    gameTimer: 'Timer de Partida',
+    timeOut: 'tempo esgotado',
   },
 };
 

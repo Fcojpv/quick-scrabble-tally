@@ -44,7 +44,7 @@ const Index = () => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const { formatTime: formatGameTime } = useGameTimer(gameStarted);
+  const gameTimer = useGameTimer(gameStarted);
   const turnTimer = useTurnTimer(currentTurn, gameStarted);
 
   // Heart animation cycle: 60s empty -> 5s filled -> repeat
@@ -215,8 +215,8 @@ const Index = () => {
                           size="icon"
                           className="flex flex-col items-center justify-center gap-0 h-10 p-1"
                         >
-                        <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
-                        {turnTimer.isActive && (
+                        <Hourglass className={`w-4 h-4 ${turnTimer.isActive || gameTimer.isCountdownActive ? "text-orange-500" : ""}`} />
+                        {(turnTimer.isActive || gameTimer.isCountdownActive) && (
                           <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
                             {t.timerOn}
                           </span>
@@ -224,9 +224,12 @@ const Index = () => {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur">
+                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                          {t.turnTimer}
+                        </div>
                         {[1, 2, 3, 4, 5].map((minutes) => (
                           <DropdownMenuItem
-                            key={minutes}
+                            key={`turn-${minutes}`}
                             onClick={() => turnTimer.startTimer(minutes)}
                             className="cursor-pointer"
                           >
@@ -236,6 +239,27 @@ const Index = () => {
                         {turnTimer.isActive && (
                           <DropdownMenuItem
                             onClick={() => turnTimer.stopTimer()}
+                            className="cursor-pointer text-destructive"
+                          >
+                            {t.stopTimer}
+                          </DropdownMenuItem>
+                        )}
+                        <div className="h-px bg-border my-1" />
+                        <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                          {t.gameTimer}
+                        </div>
+                        {[15, 30, 45, 60, 90].map((minutes) => (
+                          <DropdownMenuItem
+                            key={`game-${minutes}`}
+                            onClick={() => gameTimer.startCountdown(minutes)}
+                            className="cursor-pointer"
+                          >
+                            {minutes} {t.minutes}
+                          </DropdownMenuItem>
+                        ))}
+                        {gameTimer.isCountdownActive && (
+                          <DropdownMenuItem
+                            onClick={() => gameTimer.stopCountdown()}
                             className="cursor-pointer text-destructive"
                           >
                             {t.stopTimer}
@@ -268,7 +292,9 @@ const Index = () => {
                   onPositionChange={handlePositionChange} 
                   roundNumber={roundNumber} 
                   onEditScore={handleEditScore}
-                  gameTime={formatGameTime()}
+                  gameTime={gameTimer.formatTime()}
+                  gameTimeColor={gameTimer.getColorClass()}
+                  isGameTimeFinished={gameTimer.isFinished}
                 />
               </div>
             </CarouselItem>
@@ -358,8 +384,8 @@ const Index = () => {
                     size="icon"
                     className="flex flex-col items-center justify-center gap-0 h-10 p-1"
                   >
-                  <Hourglass className={`w-4 h-4 ${turnTimer.isActive ? "text-orange-500" : ""}`} />
-                  {turnTimer.isActive && (
+                  <Hourglass className={`w-4 h-4 ${turnTimer.isActive || gameTimer.isCountdownActive ? "text-orange-500" : ""}`} />
+                  {(turnTimer.isActive || gameTimer.isCountdownActive) && (
                     <span className="text-[9px] font-semibold text-orange-500 leading-none -mt-0.5">
                       {t.timerOn}
                     </span>
@@ -367,9 +393,12 @@ const Index = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur">
+                  <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                    {t.turnTimer}
+                  </div>
                   {[1, 2, 3, 4, 5].map((minutes) => (
                     <DropdownMenuItem
-                      key={minutes}
+                      key={`turn-${minutes}`}
                       onClick={() => turnTimer.startTimer(minutes)}
                       className="cursor-pointer"
                     >
@@ -379,6 +408,27 @@ const Index = () => {
                   {turnTimer.isActive && (
                     <DropdownMenuItem
                       onClick={() => turnTimer.stopTimer()}
+                      className="cursor-pointer text-destructive"
+                    >
+                      {t.stopTimer}
+                    </DropdownMenuItem>
+                  )}
+                  <div className="h-px bg-border my-1" />
+                  <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
+                    {t.gameTimer}
+                  </div>
+                  {[15, 30, 45, 60, 90].map((minutes) => (
+                    <DropdownMenuItem
+                      key={`game-${minutes}`}
+                      onClick={() => gameTimer.startCountdown(minutes)}
+                      className="cursor-pointer"
+                    >
+                      {minutes} {t.minutes}
+                    </DropdownMenuItem>
+                  ))}
+                  {gameTimer.isCountdownActive && (
+                    <DropdownMenuItem
+                      onClick={() => gameTimer.stopCountdown()}
                       className="cursor-pointer text-destructive"
                     >
                       {t.stopTimer}
@@ -411,7 +461,9 @@ const Index = () => {
             onPositionChange={handlePositionChange} 
             roundNumber={roundNumber} 
             onEditScore={handleEditScore}
-            gameTime={formatGameTime()}
+            gameTime={gameTimer.formatTime()}
+            gameTimeColor={gameTimer.getColorClass()}
+            isGameTimeFinished={gameTimer.isFinished}
           />
         </div>
       </div>
