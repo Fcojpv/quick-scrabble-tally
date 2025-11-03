@@ -63,6 +63,15 @@ export interface Translations {
   
   // Carousel
   comingSoon: string;
+  
+  // Share
+  shareResults: string;
+  copiedToClipboard: string;
+  shareNotSupported: string;
+  results: string;
+  roundsPlayed: string;
+  canYouBeatUs: string;
+  playHere: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -108,6 +117,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: 'live',
     timerOn: 'on',
     comingSoon: 'Coming soon',
+    shareResults: 'Share results',
+    copiedToClipboard: 'Copied to clipboard!',
+    shareNotSupported: 'Copy text to share',
+    results: 'Results',
+    roundsPlayed: 'rounds played',
+    canYouBeatUs: 'Can you beat us?',
+    playHere: 'Play here:',
   },
   es: {
     scrabbleScore: 'Scrabble Score',
@@ -151,6 +167,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: 'en vivo',
     timerOn: 'activo',
     comingSoon: 'Próxima funcionalidad',
+    shareResults: 'Compartir resultados',
+    copiedToClipboard: '¡Copiado al portapapeles!',
+    shareNotSupported: 'Copia el texto para compartir',
+    results: 'Resultados',
+    roundsPlayed: 'rondas jugadas',
+    canYouBeatUs: '¿Puedes superarnos?',
+    playHere: 'Juega aquí:',
   },
   zh: {
     scrabbleScore: 'Scrabble Score',
@@ -194,6 +217,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: '直播',
     timerOn: '开启',
     comingSoon: '即将推出',
+    shareResults: '分享结果',
+    copiedToClipboard: '已复制到剪贴板！',
+    shareNotSupported: '复制文本以分享',
+    results: '结果',
+    roundsPlayed: '已玩轮数',
+    canYouBeatUs: '你能超越我们吗？',
+    playHere: '在此玩：',
   },
   hi: {
     scrabbleScore: 'Scrabble Score',
@@ -237,6 +267,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: 'लाइव',
     timerOn: 'चालू',
     comingSoon: 'जल्द आ रहा है',
+    shareResults: 'परिणाम साझा करें',
+    copiedToClipboard: 'क्लिपबोर्ड में कॉपी किया गया!',
+    shareNotSupported: 'साझा करने के लिए टेक्स्ट कॉपी करें',
+    results: 'परिणाम',
+    roundsPlayed: 'राउंड खेले गए',
+    canYouBeatUs: 'क्या आप हमें हरा सकते हैं?',
+    playHere: 'यहां खेलें:',
   },
   ar: {
     scrabbleScore: 'Scrabble Score',
@@ -280,6 +317,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: 'مباشر',
     timerOn: 'قيد التشغيل',
     comingSoon: 'قريباً',
+    shareResults: 'مشاركة النتائج',
+    copiedToClipboard: 'تم النسخ إلى الحافظة!',
+    shareNotSupported: 'انسخ النص للمشاركة',
+    results: 'النتائج',
+    roundsPlayed: 'جولات لعبت',
+    canYouBeatUs: 'هل يمكنك التفوق علينا؟',
+    playHere: 'العب هنا:',
   },
   pt: {
     scrabbleScore: 'Scrabble Score',
@@ -323,6 +367,13 @@ export const translations: Record<Language, Translations> = {
     radioLive: 'ao vivo',
     timerOn: 'ligado',
     comingSoon: 'Em breve',
+    shareResults: 'Compartilhar resultados',
+    copiedToClipboard: 'Copiado para a área de transferência!',
+    shareNotSupported: 'Copie o texto para compartilhar',
+    results: 'Resultados',
+    roundsPlayed: 'rodadas jogadas',
+    canYouBeatUs: 'Você pode nos superar?',
+    playHere: 'Jogue aqui:',
   },
 };
 

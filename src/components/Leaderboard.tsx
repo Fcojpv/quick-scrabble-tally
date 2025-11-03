@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ShareButton } from "@/components/ShareButton";
 
 interface Player {
   id: number;
@@ -141,6 +142,7 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
           <h2 className="text-base font-semibold">{t.leaderboard}</h2>
         </div>
         <div className="flex items-center gap-3">
+          <ShareButton players={players} roundNumber={roundNumber} />
           {gameTime && (
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
               <Clock className="w-3.5 h-3.5" />
