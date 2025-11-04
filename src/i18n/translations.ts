@@ -75,6 +75,14 @@ export interface Translations {
   turnTimer: string;
   gameTimer: string;
   timeOut: string;
+  bingo: string;
+  finishedGame: string;
+  endGameConfirmation: string;
+  endGameQuestion: string;
+  applyPenalties: string;
+  unusedTilesPenalty: string;
+  penaltyDescription: string;
+  enterPenalty: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -130,6 +138,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: 'Turn Timer',
     gameTimer: 'Game Timer',
     timeOut: 'time out',
+    bingo: 'Bingo!',
+    finishedGame: 'Finished Game',
+    endGameConfirmation: 'Are you sure you want to end the game?',
+    endGameQuestion: 'The game will end and penalties for unused tiles will be applied.',
+    applyPenalties: 'Apply Penalties',
+    unusedTilesPenalty: 'Unused Tiles Penalty',
+    penaltyDescription: 'Enter the penalty points for each player (will be subtracted from total score)',
+    enterPenalty: 'Penalty points',
   },
   es: {
     scrabbleScore: 'Scrabble Score',
@@ -183,6 +199,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: 'Tiempo por Turno',
     gameTimer: 'Tiempo de Partida',
     timeOut: 'tiempo fuera',
+    bingo: '¡Bingo!',
+    finishedGame: 'Terminar Juego',
+    endGameConfirmation: '¿Estás seguro de dar fin al juego?',
+    endGameQuestion: 'El juego terminará y se aplicarán las penalizaciones por fichas sin usar.',
+    applyPenalties: 'Aplicar Penalizaciones',
+    unusedTilesPenalty: 'Penalización por Fichas Sin Usar',
+    penaltyDescription: 'Ingresa los puntos de penalización para cada jugador (se restarán del puntaje total)',
+    enterPenalty: 'Puntos de penalización',
   },
   zh: {
     scrabbleScore: 'Scrabble Score',
@@ -236,6 +260,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: '回合计时器',
     gameTimer: '游戏计时器',
     timeOut: '时间到',
+    bingo: 'Bingo!',
+    finishedGame: '结束游戏',
+    endGameConfirmation: '您确定要结束游戏吗？',
+    endGameQuestion: '游戏将结束，并将应用未使用牌的罚分。',
+    applyPenalties: '应用罚分',
+    unusedTilesPenalty: '未使用牌罚分',
+    penaltyDescription: '输入每位玩家的罚分（将从总分中扣除）',
+    enterPenalty: '罚分',
   },
   hi: {
     scrabbleScore: 'Scrabble Score',
@@ -289,6 +321,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: 'टर्न टाइमर',
     gameTimer: 'गेम टाइमर',
     timeOut: 'समय समाप्त',
+    bingo: 'बिंगो!',
+    finishedGame: 'खेल समाप्त',
+    endGameConfirmation: 'क्या आप निश्चित रूप से खेल समाप्त करना चाहते हैं?',
+    endGameQuestion: 'खेल समाप्त हो जाएगा और अप्रयुक्त टाइलों के लिए दंड लागू किया जाएगा।',
+    applyPenalties: 'दंड लागू करें',
+    unusedTilesPenalty: 'अप्रयुक्त टाइलों का दंड',
+    penaltyDescription: 'प्रत्येक खिलाड़ी के लिए दंड अंक दर्ज करें (कुल स्कोर से घटाया जाएगा)',
+    enterPenalty: 'दंड अंक',
   },
   ar: {
     scrabbleScore: 'Scrabble Score',
@@ -342,6 +382,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: 'مؤقت الدور',
     gameTimer: 'مؤقت اللعبة',
     timeOut: 'انتهى الوقت',
+    bingo: 'بينغو!',
+    finishedGame: 'إنهاء اللعبة',
+    endGameConfirmation: 'هل أنت متأكد من رغبتك في إنهاء اللعبة؟',
+    endGameQuestion: 'ستنتهي اللعبة وسيتم تطبيق عقوبات البلاط غير المستخدم.',
+    applyPenalties: 'تطبيق العقوبات',
+    unusedTilesPenalty: 'عقوبة البلاط غير المستخدم',
+    penaltyDescription: 'أدخل نقاط العقوبة لكل لاعب (سيتم طرحها من النتيجة الإجمالية)',
+    enterPenalty: 'نقاط العقوبة',
   },
   pt: {
     scrabbleScore: 'Scrabble Score',
@@ -395,6 +443,14 @@ export const translations: Record<Language, Translations> = {
     turnTimer: 'Timer de Turno',
     gameTimer: 'Timer de Partida',
     timeOut: 'tempo esgotado',
+    bingo: 'Bingo!',
+    finishedGame: 'Terminar Jogo',
+    endGameConfirmation: 'Tem certeza de que deseja encerrar o jogo?',
+    endGameQuestion: 'O jogo terminará e as penalidades por peças não utilizadas serão aplicadas.',
+    applyPenalties: 'Aplicar Penalidades',
+    unusedTilesPenalty: 'Penalidade por Peças Não Utilizadas',
+    penaltyDescription: 'Digite os pontos de penalidade para cada jogador (serão subtraídos da pontuação total)',
+    enterPenalty: 'Pontos de penalidade',
   },
 };
 

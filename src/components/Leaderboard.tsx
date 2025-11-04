@@ -22,6 +22,7 @@ interface LeaderboardProps {
   gameTime?: string;
   gameTimeColor?: string;
   isGameTimeFinished?: boolean;
+  showSurpriseEmojis?: boolean;
 }
 
 // Emojis for different position changes
@@ -29,7 +30,7 @@ const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "�
 const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
 const MAINTAIN_EMOJI = "😉";
 
-export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore, gameTime, gameTimeColor, isGameTimeFinished }: LeaderboardProps) => {
+export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore, gameTime, gameTimeColor, isGameTimeFinished, showSurpriseEmojis }: LeaderboardProps) => {
   const { t } = useLanguage();
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
@@ -215,7 +216,7 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                 <div>
                   <div className="flex items-center gap-2 font-semibold text-foreground">
                     <span>{player.name}</span>
-                    {playerEmoji && (
+                    {(showSurpriseEmojis || playerEmoji) && (
                       <motion.span 
                         className="text-lg"
                         initial={{ opacity: 0, scale: 0.5 }}
@@ -223,7 +224,7 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                         exit={{ opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.3 }}
                       >
-                        {playerEmoji}
+                        {showSurpriseEmojis ? "😮" : playerEmoji}
                       </motion.span>
                     )}
                   </div>

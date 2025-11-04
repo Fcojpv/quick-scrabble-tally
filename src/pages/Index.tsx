@@ -3,6 +3,7 @@ import { PlayerSetup } from "@/components/PlayerSetup";
 import { Leaderboard } from "@/components/Leaderboard";
 import { TurnInput } from "@/components/TurnInput";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { EndGameDialog } from "@/components/EndGameDialog";
 import { KofiDialog } from "@/components/KofiDialog";
 import { SettingsMenu } from "@/components/SettingsMenu";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,8 @@ const Index = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showEndGameDialog, setShowEndGameDialog] = useState(false);
+  const [showSurpriseEmojis, setShowSurpriseEmojis] = useState(false);
   const [roundNumber, setRoundNumber] = useState(1);
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [showKofiDialog, setShowKofiDialog] = useState(false);
@@ -153,6 +156,25 @@ const Index = () => {
           : p
       )
     );
+    toast.success(t.scoreUpdated, {
+      duration: 2000,
+    });
+  };
+
+  const handleEndGame = () => {
+    setShowSurpriseEmojis(true);
+    setShowEndGameDialog(true);
+  };
+
+  const handleApplyPenalties = (penalties: Record<number, number>) => {
+    setPlayers(prev =>
+      prev.map(p => ({
+        ...p,
+        score: p.score - penalties[p.id]
+      }))
+    );
+    setShowEndGameDialog(false);
+    setShowSurpriseEmojis(false);
     toast.success(t.scoreUpdated, {
       duration: 2000,
     });
@@ -285,6 +307,7 @@ const Index = () => {
                   timerDisplay={turnTimer.formatTime()}
                   timerColorClass={turnTimer.getColorClass()}
                   isTimerFinished={turnTimer.isFinished}
+                  onEndGame={handleEndGame}
                 />
 
                 <Leaderboard 
@@ -295,6 +318,7 @@ const Index = () => {
                   gameTime={gameTimer.formatTime()}
                   gameTimeColor={gameTimer.getColorClass()}
                   isGameTimeFinished={gameTimer.isFinished}
+                  showSurpriseEmojis={showSurpriseEmojis}
                 />
               </div>
             </CarouselItem>
@@ -454,6 +478,7 @@ const Index = () => {
             timerDisplay={turnTimer.formatTime()}
             timerColorClass={turnTimer.getColorClass()}
             isTimerFinished={turnTimer.isFinished}
+            onEndGame={handleEndGame}
           />
 
           <Leaderboard 
@@ -464,6 +489,7 @@ const Index = () => {
             gameTime={gameTimer.formatTime()}
             gameTimeColor={gameTimer.getColorClass()}
             isGameTimeFinished={gameTimer.isFinished}
+            showSurpriseEmojis={showSurpriseEmojis}
           />
         </div>
       </div>
@@ -477,6 +503,13 @@ const Index = () => {
       <KofiDialog
         open={showKofiDialog}
         onOpenChange={setShowKofiDialog}
+      />
+      
+      <EndGameDialog
+        open={showEndGameDialog}
+        onOpenChange={setShowEndGameDialog}
+        players={players}
+        onApplyPenalties={handleApplyPenalties}
       />
     </div>
   );
