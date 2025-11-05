@@ -36,21 +36,17 @@ export const EndGameDialog = ({
   const [showPenalties, setShowPenalties] = useState(false);
   const [penalties, setPenalties] = useState<Record<number, string>>({});
 
-  const handleConfirm = () => {
-    if (!showPenalties) {
-      setShowPenalties(true);
-    } else {
-      // Convert penalties to numbers and always make them negative
-      const finalPenalties: Record<number, number> = {};
-      players.forEach(player => {
-        const penalty = parseInt(penalties[player.id] || "0");
-        // Always subtract (make negative if positive was entered)
-        finalPenalties[player.id] = Math.abs(penalty);
-      });
-      onApplyPenalties(finalPenalties);
-      setShowPenalties(false);
-      setPenalties({});
-    }
+  const handleApplyPenalties = () => {
+    // Convert penalties to numbers and always make them negative
+    const finalPenalties: Record<number, number> = {};
+    players.forEach(player => {
+      const penalty = parseInt(penalties[player.id] || "0");
+      // Always subtract (make negative if positive was entered)
+      finalPenalties[player.id] = Math.abs(penalty);
+    });
+    onApplyPenalties(finalPenalties);
+    setShowPenalties(false);
+    setPenalties({});
   };
 
   const handleCancel = () => {
@@ -100,7 +96,14 @@ export const EndGameDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel}>{t.cancel}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>
+          <AlertDialogAction onClick={(e) => {
+            if (!showPenalties) {
+              e.preventDefault(); // Prevent dialog from closing
+              setShowPenalties(true);
+            } else {
+              handleApplyPenalties();
+            }
+          }}>
             {showPenalties ? t.applyPenalties : t.yes}
           </AlertDialogAction>
         </AlertDialogFooter>
