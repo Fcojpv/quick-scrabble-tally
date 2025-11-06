@@ -126,8 +126,8 @@ export const TurnInput = ({
           </Button>
         </div>
 
-        <div className="flex gap-2 flex-wrap">
-          {[1, 5, 10, 15, 20].map((quickScore) => (
+        <div className="flex gap-2 flex-nowrap">
+          {[1, 5, 10, 25].map((quickScore) => (
             <Button
               key={quickScore}
               variant="outline"

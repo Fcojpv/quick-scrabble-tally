@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const useTurnTimer = (currentTurn: number, isActive: boolean) => {
+export const useTurnTimer = (currentTurn: number, isActive: boolean, customTimerMinutes?: number) => {
   const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [configuredMinutes, setConfiguredMinutes] = useState<number | null>(null);
@@ -11,13 +11,16 @@ export const useTurnTimer = (currentTurn: number, isActive: boolean) => {
     // Reset and restart timer when turn changes
     if (previousTurnRef.current !== currentTurn) {
       setIsFinished(false);
-      // Restart timer with the same duration if it was configured
-      if (configuredMinutes !== null) {
-        setRemainingSeconds(configuredMinutes * 60);
+      // Priority: customTimerMinutes > configuredMinutes (global) > null
+      const minutesToUse = customTimerMinutes !== undefined ? customTimerMinutes : configuredMinutes;
+      if (minutesToUse !== null && minutesToUse > 0) {
+        setRemainingSeconds(minutesToUse * 60);
+      } else {
+        setRemainingSeconds(null);
       }
       previousTurnRef.current = currentTurn;
     }
-  }, [currentTurn, configuredMinutes]);
+  }, [currentTurn, configuredMinutes, customTimerMinutes]);
 
   useEffect(() => {
     if (!isActive || remainingSeconds === null || remainingSeconds <= 0) {

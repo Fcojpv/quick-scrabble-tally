@@ -20,6 +20,11 @@ export interface Translations {
   fromLeader: string;
   tiedWithLeader: string;
   editScore: string;
+  editPlayer: string;
+  playerName: string;
+  customTimer: string;
+  customTimerDescription: string;
+  noCustomTimer: string;
   newScore: string;
   cancel: string;
   save: string;
@@ -101,6 +106,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: 'from leader',
     tiedWithLeader: 'Tied with leader',
     editScore: 'Edit score',
+    editPlayer: 'Edit Player',
+    playerName: 'Player Name',
+    customTimer: 'Custom Timer',
+    customTimerDescription: 'Custom timer for this player\'s turns (minutes)',
+    noCustomTimer: 'No custom timer',
     newScore: 'New score',
     cancel: 'Cancel',
     save: 'Save',
@@ -162,6 +172,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: 'del líder',
     tiedWithLeader: 'Empate con líder',
     editScore: 'Editar puntaje',
+    editPlayer: 'Editar Jugador',
+    playerName: 'Nombre del Jugador',
+    customTimer: 'Temporizador Personalizado',
+    customTimerDescription: 'Temporizador personalizado para los turnos de este jugador (minutos)',
+    noCustomTimer: 'Sin temporizador personalizado',
     newScore: 'Nuevo puntaje',
     cancel: 'Cancelar',
     save: 'Guardar',
@@ -223,6 +238,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: '落后领先者',
     tiedWithLeader: '与领先者并列',
     editScore: '编辑分数',
+    editPlayer: '编辑玩家',
+    playerName: '玩家名字',
+    customTimer: '自定义计时器',
+    customTimerDescription: '此玩家回合的自定义计时器（分钟）',
+    noCustomTimer: '无自定义计时器',
     newScore: '新分数',
     cancel: '取消',
     save: '保存',
@@ -284,6 +304,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: 'लीडर से',
     tiedWithLeader: 'लीडर के साथ बराबरी',
     editScore: 'स्कोर संपादित करें',
+    editPlayer: 'खिलाड़ी संपादित करें',
+    playerName: 'खिलाड़ी का नाम',
+    customTimer: 'कस्टम टाइमर',
+    customTimerDescription: 'इस खिलाड़ी की बारी के लिए कस्टम टाइमर (मिनट)',
+    noCustomTimer: 'कोई कस्टम टाइमर नहीं',
     newScore: 'नया स्कोर',
     cancel: 'रद्द करें',
     save: 'सहेजें',
@@ -345,6 +370,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: 'من المتصدر',
     tiedWithLeader: 'تعادل مع المتصدر',
     editScore: 'تحرير النتيجة',
+    editPlayer: 'تحرير اللاعب',
+    playerName: 'اسم اللاعب',
+    customTimer: 'مؤقت مخصص',
+    customTimerDescription: 'مؤقت مخصص لأدوار هذا اللاعب (دقائق)',
+    noCustomTimer: 'لا يوجد مؤقت مخصص',
     newScore: 'نتيجة جديدة',
     cancel: 'إلغاء',
     save: 'حفظ',
@@ -406,6 +436,11 @@ export const translations: Record<Language, Translations> = {
     fromLeader: 'do líder',
     tiedWithLeader: 'Empatado com o líder',
     editScore: 'Editar pontuação',
+    editPlayer: 'Editar Jogador',
+    playerName: 'Nome do Jogador',
+    customTimer: 'Timer Personalizado',
+    customTimerDescription: 'Timer personalizado para os turnos deste jogador (minutos)',
+    noCustomTimer: 'Sem timer personalizado',
     newScore: 'Nova pontuação',
     cancel: 'Cancelar',
     save: 'Salvar',

@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Trophy, TrendingUp, Pencil, Clock, Bell } from "lucide-react";
+import { Trophy, TrendingUp, Pencil, Clock, Bell, Hourglass, Plus, Minus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,13 +12,14 @@ interface Player {
   id: number;
   name: string;
   score: number;
+  customTimerMinutes?: number;
 }
 
 interface LeaderboardProps {
   players: Player[];
   onPositionChange?: () => void;
   roundNumber: number;
-  onEditScore?: (playerId: number, newScore: number) => void;
+  onEditPlayer?: (playerId: number, newName: string, newScore: number, customTimerMinutes?: number) => void;
   gameTime?: string;
   gameTimeColor?: string;
   isGameTimeFinished?: boolean;
@@ -30,13 +31,15 @@ const HAPPY_EMOJIS = ["🎉", "🥳", "🌟", "✨", "🎊", "🏆", "💫", "�
 const UPSET_EMOJIS = ["😮", "😯", "😲", "🤔", "😕", "😬", "😐", "😑", "🫤", "😶"];
 const MAINTAIN_EMOJI = "😉";
 
-export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScore, gameTime, gameTimeColor, isGameTimeFinished, showSurpriseEmojis }: LeaderboardProps) => {
+export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditPlayer, gameTime, gameTimeColor, isGameTimeFinished, showSurpriseEmojis }: LeaderboardProps) => {
   const { t } = useLanguage();
   const [previousRankings, setPreviousRankings] = useState<number[]>([]);
   const [celebratingPlayers, setCelebratingPlayers] = useState<Set<number>>(new Set());
   const [playerEmojis, setPlayerEmojis] = useState<Map<number, string>>(new Map());
   const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
+  const [editedName, setEditedName] = useState("");
   const [editedScore, setEditedScore] = useState("");
+  const [editedCustomTimer, setEditedCustomTimer] = useState("");
 
   const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
   const leaderScore = sortedPlayers[0]?.score || 0;
@@ -123,17 +126,41 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
 
   const handleEditClick = (player: Player) => {
     setEditingPlayer(player);
+    setEditedName(player.name);
     setEditedScore(player.score.toString());
+    setEditedCustomTimer((player.customTimerMinutes || 0).toString());
   };
 
   const handleSaveEdit = () => {
-    if (editingPlayer && onEditScore) {
+    if (editingPlayer && onEditPlayer) {
+      const newName = editedName.trim();
       const newScore = parseInt(editedScore) || 0;
-      if (newScore >= 0) {
-        onEditScore(editingPlayer.id, newScore);
+      const newCustomTimer = parseInt(editedCustomTimer) || 0;
+      
+      if (newName.length > 0 && newScore >= 0 && newCustomTimer >= 0) {
+        onEditPlayer(
+          editingPlayer.id, 
+          newName, 
+          newScore, 
+          newCustomTimer > 0 ? newCustomTimer : undefined
+        );
         setEditingPlayer(null);
+        setEditedName("");
         setEditedScore("");
+        setEditedCustomTimer("");
       }
+    }
+  };
+
+  const incrementTimer = () => {
+    const current = parseInt(editedCustomTimer) || 0;
+    setEditedCustomTimer((current + 1).toString());
+  };
+
+  const decrementTimer = () => {
+    const current = parseInt(editedCustomTimer) || 0;
+    if (current > 0) {
+      setEditedCustomTimer((current - 1).toString());
     }
   };
 
@@ -249,14 +276,17 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                   </div>
                   <div className="text-xs text-muted-foreground">{t.points}</div>
                 </div>
-                {onEditScore && (
+                {onEditPlayer && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8"
+                    className="h-8 w-8 relative"
                     onClick={() => handleEditClick(player)}
                   >
                     <Pencil className="w-4 h-4" />
+                    {player.customTimerMinutes && player.customTimerMinutes > 0 && (
+                      <Hourglass className="w-3 h-3 absolute -top-1 -right-1 text-primary/30" />
+                    )}
                   </Button>
                 )}
               </div>
@@ -270,9 +300,20 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
       <Dialog open={!!editingPlayer} onOpenChange={() => setEditingPlayer(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{t.editScore} {editingPlayer?.name}</DialogTitle>
+            <DialogTitle>{t.editPlayer}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t.playerName}</label>
+              <Input
+                type="text"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                className="text-lg"
+                autoFocus
+              />
+            </div>
+            
             <div className="space-y-2">
               <label className="text-sm font-medium">{t.newScore}</label>
               <Input
@@ -281,8 +322,41 @@ export const Leaderboard = ({ players, onPositionChange, roundNumber, onEditScor
                 value={editedScore}
                 onChange={(e) => setEditedScore(e.target.value)}
                 className="text-2xl text-center font-bold"
-                autoFocus
               />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">{t.customTimer}</label>
+              <p className="text-xs text-muted-foreground">{t.customTimerDescription}</p>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={decrementTimer}
+                  disabled={parseInt(editedCustomTimer) <= 0}
+                >
+                  <Minus className="w-4 h-4" />
+                </Button>
+                <Input
+                  type="number"
+                  min="0"
+                  value={editedCustomTimer}
+                  onChange={(e) => setEditedCustomTimer(e.target.value)}
+                  className="text-xl text-center font-bold flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={incrementTimer}
+                >
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </div>
+              {parseInt(editedCustomTimer) === 0 && (
+                <p className="text-xs text-muted-foreground italic">{t.noCustomTimer}</p>
+              )}
             </div>
           </div>
           <DialogFooter>

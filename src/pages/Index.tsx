@@ -29,6 +29,7 @@ interface Player {
   id: number;
   name: string;
   score: number;
+  customTimerMinutes?: number;
 }
 
 const Index = () => {
@@ -48,7 +49,7 @@ const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const gameTimer = useGameTimer(gameStarted);
-  const turnTimer = useTurnTimer(currentTurn, gameStarted);
+  const turnTimer = useTurnTimer(currentTurn, gameStarted, players[currentTurn]?.customTimerMinutes);
 
   // Heart animation cycle: 60s empty -> 5s filled -> repeat
   useEffect(() => {
@@ -148,17 +149,25 @@ const Index = () => {
     // This is called when a player's position changes in the leaderboard
   };
 
-  const handleEditScore = (playerId: number, newScore: number) => {
+  const handleEditPlayer = (playerId: number, newName: string, newScore: number, customTimerMinutes?: number) => {
     setPlayers(prev =>
       prev.map(p =>
         p.id === playerId
-          ? { ...p, score: newScore }
+          ? { ...p, name: newName, score: newScore, customTimerMinutes }
           : p
       )
     );
     toast.success(t.scoreUpdated, {
       duration: 2000,
     });
+  };
+
+  const handleTurnTimerChange = (minutes: number) => {
+    // Reset all custom timers when global timer changes
+    setPlayers(prev =>
+      prev.map(p => ({ ...p, customTimerMinutes: undefined }))
+    );
+    turnTimer.startTimer(minutes);
   };
 
   const handleEndGame = () => {
@@ -255,7 +264,7 @@ const Index = () => {
                         {[1, 2, 3, 4, 5].map((minutes) => (
                           <DropdownMenuItem
                             key={`turn-${minutes}`}
-                            onClick={() => turnTimer.startTimer(minutes)}
+                            onClick={() => handleTurnTimerChange(minutes)}
                             className="cursor-pointer"
                           >
                             {minutes} {minutes === 1 ? t.minute : t.minutes}
@@ -317,7 +326,7 @@ const Index = () => {
                   players={players} 
                   onPositionChange={handlePositionChange} 
                   roundNumber={roundNumber} 
-                  onEditScore={handleEditScore}
+                  onEditPlayer={handleEditPlayer}
                   gameTime={gameTimer.formatTime()}
                   gameTimeColor={gameTimer.getColorClass()}
                   isGameTimeFinished={gameTimer.isFinished}
@@ -426,7 +435,7 @@ const Index = () => {
                   {[1, 2, 3, 4, 5].map((minutes) => (
                     <DropdownMenuItem
                       key={`turn-${minutes}`}
-                      onClick={() => turnTimer.startTimer(minutes)}
+                      onClick={() => handleTurnTimerChange(minutes)}
                       className="cursor-pointer"
                     >
                       {minutes} {minutes === 1 ? t.minute : t.minutes}
@@ -488,7 +497,7 @@ const Index = () => {
             players={players} 
             onPositionChange={handlePositionChange} 
             roundNumber={roundNumber} 
-            onEditScore={handleEditScore}
+            onEditPlayer={handleEditPlayer}
             gameTime={gameTimer.formatTime()}
             gameTimeColor={gameTimer.getColorClass()}
             isGameTimeFinished={gameTimer.isFinished}
