@@ -143,10 +143,10 @@ export const TurnInput = ({
             variant="outline"
             size="sm"
             onClick={handleBingo}
-            className="flex-1 min-w-[50px] border-2 border-yellow-500/50 hover:border-yellow-500 relative pb-5"
+            className="flex-1 min-w-[50px] border-2 border-yellow-500/50 hover:border-yellow-500 flex-col gap-0.5 py-1.5"
           >
-            <span className="text-sm">+50</span>
-            <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 text-[9px] text-yellow-500 font-semibold leading-none">
+            <span className="text-sm leading-none">+50</span>
+            <span className="text-[9px] text-yellow-500 font-semibold leading-none">
               {t.bingo}
             </span>
           </Button>
