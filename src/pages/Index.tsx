@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { PlayerSetup } from "@/components/PlayerSetup";
 import { Leaderboard } from "@/components/Leaderboard";
 import { TurnInput } from "@/components/TurnInput";
+import { ScoreHistory } from "@/components/ScoreHistory";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { EndGameDialog } from "@/components/EndGameDialog";
 import { KofiDialog } from "@/components/KofiDialog";
@@ -32,6 +33,12 @@ interface Player {
   customTimerMinutes?: number;
 }
 
+interface RoundScore {
+  playerId: number;
+  score: number;
+  wasBingo: boolean;
+}
+
 const Index = () => {
   const { t } = useLanguage();
   const [gameStarted, setGameStarted] = useState(false);
@@ -47,6 +54,8 @@ const Index = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [scoreHistory, setScoreHistory] = useState<RoundScore[][]>([]);
+  const [currentRoundScores, setCurrentRoundScores] = useState<RoundScore[]>([]);
   
   const gameTimer = useGameTimer(gameStarted);
   const turnTimer = useTurnTimer(currentTurn, gameStarted, players[currentTurn]?.customTimerMinutes);
@@ -110,7 +119,7 @@ const Index = () => {
     setGameStarted(true);
   };
 
-  const handleSubmitScore = (score: number) => {
+  const handleSubmitScore = (score: number, wasBingo: boolean) => {
     const currentPlayerId = players[currentTurn].id;
     
     setPlayers(prev =>
@@ -120,6 +129,12 @@ const Index = () => {
           : p
       )
     );
+
+    // Track score for current round
+    setCurrentRoundScores(prev => [
+      ...prev,
+      { playerId: currentPlayerId, score, wasBingo }
+    ]);
 
     const playerName = players.find(p => p.id === currentPlayerId)?.name || `${t.player} ${currentPlayerId}`;
     toast.success(`${playerName}: +${score} ${t.points}`, {
@@ -131,6 +146,9 @@ const Index = () => {
     
     // Increment round when all players have played
     if (nextTurn === 0) {
+      // Save completed round to history
+      setScoreHistory(prev => [...prev, currentRoundScores.concat([{ playerId: currentPlayerId, score, wasBingo }])]);
+      setCurrentRoundScores([]);
       setRoundNumber(prev => prev + 1);
     }
   };
@@ -140,6 +158,8 @@ const Index = () => {
     setPlayers([]);
     setCurrentTurn(0);
     setRoundNumber(1);
+    setScoreHistory([]);
+    setCurrentRoundScores([]);
     setShowResetDialog(false);
     turnTimer.stopTimer();
     toast.info(t.gameReset);
@@ -335,13 +355,9 @@ const Index = () => {
               </div>
             </CarouselItem>
 
-            {/* Screen 2: Coming soon */}
+            {/* Screen 2: Score History */}
             <CarouselItem>
-              <div className="max-w-2xl mx-auto space-y-3 animate-slide-up min-h-[60vh] flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
-                  <p className="text-lg">{t.comingSoon}</p>
-                </div>
-              </div>
+              <ScoreHistory players={players} scoreHistory={scoreHistory} />
             </CarouselItem>
           </CarouselContent>
 

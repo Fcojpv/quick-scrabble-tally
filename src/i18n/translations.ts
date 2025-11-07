@@ -25,6 +25,8 @@ export interface Translations {
   customTimer: string;
   customTimerDescription: string;
   noCustomTimer: string;
+  scoreHistory: string;
+  noRoundsYet: string;
   newScore: string;
   cancel: string;
   save: string;
@@ -111,6 +113,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: 'Custom Timer',
     customTimerDescription: 'Custom timer for this player\'s turns (minutes)',
     noCustomTimer: 'No custom timer',
+    scoreHistory: 'Score History',
+    noRoundsYet: 'No rounds completed yet',
     newScore: 'New score',
     cancel: 'Cancel',
     save: 'Save',
@@ -177,6 +181,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: 'Temporizador Personalizado',
     customTimerDescription: 'Temporizador personalizado para los turnos de este jugador (minutos)',
     noCustomTimer: 'Sin temporizador personalizado',
+    scoreHistory: 'Historial de Puntajes',
+    noRoundsYet: 'No hay rondas completadas aún',
     newScore: 'Nuevo puntaje',
     cancel: 'Cancelar',
     save: 'Guardar',
@@ -243,6 +249,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: '自定义计时器',
     customTimerDescription: '此玩家回合的自定义计时器（分钟）',
     noCustomTimer: '无自定义计时器',
+    scoreHistory: '分数历史',
+    noRoundsYet: '尚未完成任何回合',
     newScore: '新分数',
     cancel: '取消',
     save: '保存',
@@ -309,6 +317,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: 'कस्टम टाइमर',
     customTimerDescription: 'इस खिलाड़ी की बारी के लिए कस्टम टाइमर (मिनट)',
     noCustomTimer: 'कोई कस्टम टाइमर नहीं',
+    scoreHistory: 'स्कोर इतिहास',
+    noRoundsYet: 'अभी तक कोई राउंड पूरा नहीं हुआ',
     newScore: 'नया स्कोर',
     cancel: 'रद्द करें',
     save: 'सहेजें',
@@ -375,6 +385,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: 'مؤقت مخصص',
     customTimerDescription: 'مؤقت مخصص لأدوار هذا اللاعب (دقائق)',
     noCustomTimer: 'لا يوجد مؤقت مخصص',
+    scoreHistory: 'سجل النقاط',
+    noRoundsYet: 'لم تكتمل أي جولات بعد',
     newScore: 'نتيجة جديدة',
     cancel: 'إلغاء',
     save: 'حفظ',
@@ -441,6 +453,8 @@ export const translations: Record<Language, Translations> = {
     customTimer: 'Timer Personalizado',
     customTimerDescription: 'Timer personalizado para os turnos deste jogador (minutos)',
     noCustomTimer: 'Sem timer personalizado',
+    scoreHistory: 'Histórico de Pontuações',
+    noRoundsYet: 'Nenhuma rodada concluída ainda',
     newScore: 'Nova pontuação',
     cancel: 'Cancelar',
     save: 'Salvar',

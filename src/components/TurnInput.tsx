@@ -9,7 +9,7 @@ import confetti from "canvas-confetti";
 interface TurnInputProps {
   currentPlayer: number;
   currentPlayerName: string;
-  onSubmitScore: (score: number) => void;
+  onSubmitScore: (score: number, wasBingo: boolean) => void;
   timerDisplay: string | null;
   timerColorClass: string;
   isTimerFinished: boolean;
@@ -27,13 +27,15 @@ export const TurnInput = ({
 }: TurnInputProps) => {
   const { t } = useLanguage();
   const [score, setScore] = useState("");
+  const [wasBingo, setWasBingo] = useState(false);
   const bingoButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = () => {
     const numScore = parseInt(score) || 0;
     if (numScore >= 0) {
-      onSubmitScore(numScore);
+      onSubmitScore(numScore, wasBingo);
       setScore("");
+      setWasBingo(false);
     }
   };
 
@@ -50,6 +52,7 @@ export const TurnInput = ({
   const handleBingo = () => {
     const newScore = (parseInt(score || "0") + 50).toString();
     setScore(newScore);
+    setWasBingo(true);
     
     // Trigger confetti from the button position
     if (bingoButtonRef.current) {
