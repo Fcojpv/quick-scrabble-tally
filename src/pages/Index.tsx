@@ -70,7 +70,10 @@ const Index = () => {
     const info = getSavedGameInfo();
     if (info) {
       setSavedGameInfo(info);
-      setShowRestoreDialog(true);
+      // Small delay to ensure all other effects have run
+      setTimeout(() => {
+        setShowRestoreDialog(true);
+      }, 100);
     }
   }, []);
 
@@ -155,13 +158,21 @@ const Index = () => {
   const handleRestoreGame = () => {
     const savedState = loadGameState();
     if (savedState) {
-      setGameStarted(savedState.gameStarted);
+      // Close dialog first
+      setShowRestoreDialog(false);
+      
+      // Batch all state updates - set gameStarted LAST to ensure proper render
       setPlayers(savedState.players);
       setCurrentTurn(savedState.currentTurn);
       setRoundNumber(savedState.roundNumber);
       setScoreHistory(savedState.scoreHistory);
       setCurrentRoundScores(savedState.currentRoundScores);
-      toast.success(t.gameRestored, { duration: 3000 });
+      setGameStarted(true); // Set this LAST and explicitly to true
+      
+      // Show success message after a small delay to ensure UI has updated
+      setTimeout(() => {
+        toast.success(t.gameRestored, { duration: 3000 });
+      }, 100);
     }
   };
 
@@ -266,8 +277,25 @@ const Index = () => {
     });
   };
 
-  if (!gameStarted) {
-    return <PlayerSetup onStart={handleStartGame} />;
+  // Don't show PlayerSetup if we have players loaded (means we're restoring)
+  if (!gameStarted && players.length === 0) {
+    return (
+      <>
+        <PlayerSetup onStart={handleStartGame} />
+        <RestoreGameDialog
+          open={showRestoreDialog}
+          onOpenChange={setShowRestoreDialog}
+          gameInfo={savedGameInfo}
+          onRestore={handleRestoreGame}
+          onNewGame={handleNewGame}
+        />
+      </>
+    );
+  }
+
+  // If we have players but game not started yet, wait for state to sync
+  if (!gameStarted && players.length > 0) {
+    return null;
   }
 
   const currentPlayer = players[currentTurn];

@@ -49,8 +49,11 @@ export const RestoreGameDialog = ({
   };
 
   const handleRestore = () => {
-    onRestore();
-    onOpenChange(false);
+    onOpenChange(false); // Close dialog FIRST
+    // Give dialog time to close before restoring
+    setTimeout(() => {
+      onRestore();
+    }, 50);
   };
 
   const handleNewGame = () => {
